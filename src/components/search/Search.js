@@ -1,5 +1,6 @@
 import React from "react";
 import { TextField, CircularProgress } from "@material-ui/core";
+import PropTypes from "prop-types";
 
 export const Search = ({ params, searchValue, onChange, loading }) => {
   return (
@@ -19,4 +20,11 @@ export const Search = ({ params, searchValue, onChange, loading }) => {
       }}
     />
   );
+};
+
+Search.propTypes = {
+  params: PropTypes.object.isRequired,
+  searchValue: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };

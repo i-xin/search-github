@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Autocomplete } from "@material-ui/lab";
+import PropTypes from "prop-types";
 
 import { debounce } from "../../utils/helper";
 import { Search } from "./Search";
@@ -78,4 +79,8 @@ export const AutocompleteSearch = ({ setInput }) => {
       )}
     />
   );
+};
+
+AutocompleteSearch.propTypes = {
+  setInput: PropTypes.func.isRequired,
 };
