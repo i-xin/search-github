@@ -1,4 +1,4 @@
 export const PageConfig = {
-  PageSize: 5,
+  PageSize: 30,
   StartPage: 1,
 };
