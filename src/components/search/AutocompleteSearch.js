@@ -27,7 +27,7 @@ export const AutocompleteSearch = ({ setInput }) => {
 
   const processSuggestions = (input) => {
     setInput(input);
-    getIssues(input).then((res) => {
+    getIssues(input, null, dispatchSearchContext).then((res) => {
       const issues = processData(res);
       dispatchSearchContext({
         type: SearchActions.SET_INITIAL_ISSUES,

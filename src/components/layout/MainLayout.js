@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Container, Box, Typography } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 import { BottomScrollListener } from "react-bottom-scroll-listener";
 
 import { AutocompleteSearch } from "../search/AutocompleteSearch";
@@ -11,10 +12,10 @@ import { useSearchContext, SearchActions } from "../../context/search";
 export const MainLayout = () => {
   const [input, setInput] = useState("");
   const [currentPage, setCurrentPage] = useState(PageConfig.StartPage);
-  const { dispatchSearchContext } = useSearchContext();
+  const { searchState, dispatchSearchContext } = useSearchContext();
 
   const handleBottomScroll = () => {
-    getIssues(input, currentPage + 1).then((res) => {
+    getIssues(input, currentPage + 1, dispatchSearchContext).then((res) => {
       const issues = processData(res);
       dispatchSearchContext({
         type: SearchActions.UPDATE_ISSUES,
@@ -27,6 +28,9 @@ export const MainLayout = () => {
   return (
     <BottomScrollListener onBottom={handleBottomScroll}>
       <Container>
+        {searchState.error && (
+          <Alert severity="error">{searchState.error}</Alert>
+        )}
         <Box display="flex" justifyContent="center" m={2}>
           <Typography variant="h5">Search React Github</Typography>
         </Box>
