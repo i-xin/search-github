@@ -17,6 +17,7 @@ export const AutocompleteSearch = ({ setInput }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSuggestion = useCallback(
     debounce((input) => {
+      if (!input || input.length === 0) return;
       setLoading(true);
       processSuggestions(input);
     }),
@@ -24,7 +25,6 @@ export const AutocompleteSearch = ({ setInput }) => {
   );
 
   const processSuggestions = (input) => {
-    if (!input || input.length === 0) return;
     setInput(input);
     getIssues(input).then((res) => {
       const issues = processData(res);
@@ -55,6 +55,9 @@ export const AutocompleteSearch = ({ setInput }) => {
   return (
     <Autocomplete
       open={open}
+      onKeyDown={() => {
+        setOpen(false);
+      }}
       onOpen={() => {
         setOpen(true);
       }}
@@ -64,6 +67,7 @@ export const AutocompleteSearch = ({ setInput }) => {
       loading={loading}
       options={options}
       onChange={handleChange}
+      getOptionSelected={(option, value) => option.value === value.value}
       renderInput={(params) => (
         <Search
           params={params}

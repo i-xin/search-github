@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Box } from "@material-ui/core";
+import { Container, Box, Typography } from "@material-ui/core";
 import { BottomScrollListener } from "react-bottom-scroll-listener";
 
 import { AutocompleteSearch } from "../search/AutocompleteSearch";
@@ -27,7 +27,10 @@ export const MainLayout = () => {
   return (
     <BottomScrollListener onBottom={handleBottomScroll}>
       <Container>
-        <Box>
+        <Box display="flex" justifyContent="center" m={2}>
+          <Typography variant="h5">Search React Github</Typography>
+        </Box>
+        <Box m={2}>
           <AutocompleteSearch setInput={setInput} />
         </Box>
         <Box>
