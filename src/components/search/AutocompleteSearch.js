@@ -7,7 +7,7 @@ import { Search } from "./Search";
 import { PageConfig } from "../../utils/constants";
 import { useSearchContext, SearchActions } from "../../context/search";
 
-export const AutocompleteSearch = () => {
+export const AutocompleteSearch = ({ setInput }) => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -17,17 +17,18 @@ export const AutocompleteSearch = () => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSuggestion = useCallback(
-    debounce((suggestion) => {
+    debounce((input) => {
       setLoading(true);
-      processSuggestions(suggestion);
+      processSuggestions(input);
     }),
     []
   );
 
-  const processSuggestions = (suggestion) => {
-    if (suggestion.length === 0) return;
+  const processSuggestions = (input) => {
+    if (input.length === 0) return;
+    setInput(input);
     const queryString =
-      "q=" + encodeURIComponent(`repo:facebook/react ${suggestion} in:title`);
+      "q=" + encodeURIComponent(`repo:facebook/react ${input} in:title`);
     axios
       .get(
         `https://api.github.com/search/issues?${queryString}&per_page=${PageConfig.PageSize}&page=${PageConfig.StartPage}`
@@ -45,7 +46,7 @@ export const AutocompleteSearch = () => {
           };
         });
         dispatchSearchContext({
-          type: SearchActions.SET_ISSUES,
+          type: SearchActions.SET_INITIAL_ISSUES,
           data: issues,
         });
         setOptions(issues.map((item) => item.title).slice(0, 5));
@@ -53,9 +54,15 @@ export const AutocompleteSearch = () => {
       });
   };
 
-  const handleChange = (e) => {
-    setSearchValue(e.target.value);
-    debouncedSuggestion(e.target.value);
+  const handleChange = (e, value) => {
+    // Value is defined referring that one of autocomplete suggestion is selected
+    if (value) {
+      setSearchValue(value);
+      debouncedSuggestion(value);
+    } else {
+      setSearchValue(e.target.value);
+      debouncedSuggestion(e.target.value);
+    }
   };
 
   useEffect(() => {
@@ -73,11 +80,12 @@ export const AutocompleteSearch = () => {
       }}
       loading={loading}
       options={options}
+      onChange={handleChange}
       renderInput={(params) => (
         <Search
           params={params}
           searchValue={searchValue}
-          handleChange={handleChange}
+          onChange={handleChange}
           loading={loading}
         ></Search>
       )}

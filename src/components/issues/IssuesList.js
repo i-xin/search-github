@@ -7,12 +7,12 @@ export const IssuesList = () => {
 
   return searchState.issues.map((issue) => {
     return (
-      <Card>
+      <Card key={issue.id}>
         <CardContent>
           <Box display="flex" flexDirection="row">
             <Typography variant="h6">{issue.title}</Typography>
             {issue.labels.map((label) => (
-              <Chip label={label.name} color="primary" />
+              <Chip key={label.id} label={label.name} color="primary" />
             ))}
           </Box>
           <Typography variant="body2">

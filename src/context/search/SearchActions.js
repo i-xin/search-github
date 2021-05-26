@@ -1,3 +1,3 @@
 export const SearchActions = {
-  SET_ISSUES: "SET_ISSUES",
+  SET_INITIAL_ISSUES: "SET_INITIAL_ISSUES",
 };
