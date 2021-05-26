@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { PageConfig } from "./constants";
+import { getRelativeTime } from "./date";
 
 export const getIssues = (input, pageNum) => {
   const startPage = pageNum ? pageNum : PageConfig.StartPage;
@@ -19,7 +20,7 @@ export const processData = (res) => {
       labels: item.labels,
       number: item.number,
       title: item.title,
-      update_at: item.update_at,
+      createdAt: getRelativeTime(item.created_at),
       reporterName: item.user.login,
     };
   });

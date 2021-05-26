@@ -16,7 +16,7 @@ export const IssuesList = () => {
             ))}
           </Box>
           <Typography variant="body2">
-            #{issue.number} opened 6 hours ago by {issue.reporterName}
+            #{issue.number} opened {issue.createdAt} by {issue.reporterName}
           </Typography>
         </CardContent>
       </Card>

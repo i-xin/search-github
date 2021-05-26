@@ -17,7 +17,7 @@ export const MainLayout = () => {
     getIssues(input, currentPage + 1).then((res) => {
       const issues = processData(res);
       dispatchSearchContext({
-        type: SearchActions.SET_INITIAL_ISSUES,
+        type: SearchActions.UPDATE_ISSUES,
         data: issues,
       });
     });

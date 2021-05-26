@@ -24,7 +24,7 @@ export const AutocompleteSearch = ({ setInput }) => {
   );
 
   const processSuggestions = (input) => {
-    if (input.length === 0) return;
+    if (!input || input.length === 0) return;
     setInput(input);
     getIssues(input).then((res) => {
       const issues = processData(res);
