@@ -6,7 +6,7 @@ import { Search } from "./Search";
 import { useSearchContext, SearchActions } from "../../context/search";
 import { getIssues, processData } from "../../utils/api";
 
-export const AutocompleteSearch = ({ setInput, setTotalCount }) => {
+export const AutocompleteSearch = ({ setInput }) => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -27,7 +27,6 @@ export const AutocompleteSearch = ({ setInput, setTotalCount }) => {
     if (input.length === 0) return;
     setInput(input);
     getIssues(input).then((res) => {
-      setTotalCount(res.total_count);
       const issues = processData(res);
       dispatchSearchContext({
         type: SearchActions.SET_INITIAL_ISSUES,
